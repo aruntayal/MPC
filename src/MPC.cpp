@@ -18,7 +18,7 @@ const double DT = 0.1; // how much time we expect environment changes
 
 const double Lf = 2.67; //Lf was tuned until the the radius formed by the simulating the model
 // presented in the classroom matched the previous radius.
-const double VELOCITY_MAX = 100.0; 
+const double VELOCITY_MAX = 80.0; 
 
 const int NUMBER_OF_STATES = 6; // px, py, psi, v, cte, epsi
 const int NUMBER_OF_ACTUATIONS = 2; // steering angle, acceleration
@@ -88,7 +88,7 @@ class FG_eval {
 
       // The state at time t+1 .
       AD<double> x1 = vars[ID_FIRST_px + t + 1];
-      AD<double> y1 = vars[ID_FIRST_py + t + 1+ 1];
+      AD<double> y1 = vars[ID_FIRST_py + t + 1];
       AD<double> psi1 = vars[ID_FIRST_psi + t + 1];
       AD<double> v1 = vars[ID_FIRST_v + t + 1];
       AD<double> cte1 = vars[ID_FIRST_cte + t + 1];
@@ -119,24 +119,6 @@ class FG_eval {
         fg[ID_FIRST_v + t + 2] = v1 - v1_f;
         fg[ID_FIRST_cte + t + 2] = cte1 - cte1_f;
         fg[ID_FIRST_epsi + t + 2] = epsi1 - epsi1_f;
-
-     /* AD<double> f0 = 0.0;
-      for (int i = 0; i < coeffs.size(); i++) {
-        f0 += coeffs[i] * CppAD::pow(x0, i);
-      }
-      AD<double> psides0 = 0.0;
-      for (int i = 1; i < coeffs.size(); i++) {
-        psides0 += i*coeffs[i] * CppAD::pow(x0, i-1); // f'(x0)
-      }
-      psides0 = CppAD::atan(psides0);
-
-      fg[2 + ID_FIRST_px + t] = x1 - (x0 + v0 * CppAD::cos(psi0) * DT);
-      fg[2 + ID_FIRST_py + t] = y1 - (y0 + v0 * CppAD::sin(psi0) * DT);
-      fg[2 + ID_FIRST_psi + t] = psi1 - (psi0 + v0 * delta0 / Lf * DT);
-      fg[2 + ID_FIRST_v + t] = v1 - (v0 + a0 * DT);
-      fg[2 + ID_FIRST_cte + t] = cte1 - ((f0 - y0) + (v0 * CppAD::sin(epsi0) * DT));
-      fg[2 + ID_FIRST_epsi + t] = epsi1 - ((psi0 - psides0) + v0 * delta0 / Lf * DT);*/
-
 
     }
     //std::cout<<"\n operator() complete";
@@ -198,7 +180,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   }
   
   for (int i = ID_FIRST_delta; i < ID_FIRST_a; i++) {
-    vars_lowerbound[i] = 0.75;
+    vars_lowerbound[i] = -0.75;
     vars_upperbound[i] = 0.75;
   }
   // Acceleration/decceleration upper and lower limits
