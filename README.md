@@ -9,10 +9,16 @@ The aim of this project is to implement Model Predictive Control to drive the ca
 * Actuators: _[δ,a]_
   Where (_δ_)  is steering angle and  (_a_) is throttle.
 
+_Kinematic Model_
 ![Kinematic model](images/eq1.png)
+
+
 where, _Lf_ is the distance between front of vehicle and CoG(centre of gravity).
 
+_Errors_
 ![Errors](images/eq2.png)
+
+
 Cross track error and orientation error were used in calculating cost function.
 
 
