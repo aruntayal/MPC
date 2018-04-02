@@ -3,7 +3,7 @@ The aim of this project is to implement Model Predictive Control to drive the ca
 
 ---
 
-##Vehicle Model 
+## Vehicle Model 
 * State: _[x,y,ψ,v]_
   where (_x,y_) is position,  (_ψ_) is orientation and (_v_) is velocity of vehicle.
 * Actuators: _[δ,a]_
@@ -16,7 +16,7 @@ where, _Lf_ is the distance between front of vehicle and CoG(centre of gravity).
 Cross track error and orientation error were used in calculating cost function.
 
 
-###MPC Algorithm:
+### MPC Algorithm:
 
 * Initializs everything required foor MPC including duration of trajectory, vehicle models , constraints such
 as actual limitation of vehicle and also define cost function.
@@ -26,10 +26,10 @@ as actual limitation of vehicle and also define cost function.
   * Apply the control input to vehicle and repeat loop.
 
 
-###Timestep Length and Elapsed Duration (N & dt):
+### Timestep Length and Elapsed Duration (N & dt):
 The N was fixed at 10 steps and dt was fixed at 0.1s to give duration of 1 sec. I started with dt as 0.1 as this is also latency and can act as good starting point. If N is choosen too small e.g 5 then the decision is taken only for very small trajectory and if N is taken large then the trajectory is computed for long distance.After trial and test, I zeroed in for 10.
 
-###Polynomial Fitting and MPC Preprocessing
+### Polynomial Fitting and MPC Preprocessing
 The waypoints are preprocessed by transforming them to the vehicle's perspective. 
 
 ```cpp
@@ -43,7 +43,7 @@ The waypoints are preprocessed by transforming them to the vehicle's perspective
           }
 ```
 
-###Model Predictive Control with Latency
+### Model Predictive Control with Latency
 The latency provided is 100ms. To deal with it, instead of using current state of vehicle as it is , we adjust it with latency before sending it to solver.
 
 
